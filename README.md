@@ -15,7 +15,7 @@ Este proyecto se centra en la clasificación de señas dinámicas en tiempo real
 
 Por ello, la solución fue que, dentro de los 30 segundos de recolección de datos, el usuario tiene la opción de finalizar la grabación (presionando la tecla ‘a’) cuando cree conveniente. Así, se almacena la cantidad necesaria de frames, en vez de que hayan ‘ceros’ que puedan confundir al modelo. Un punto a considerar es que, por el momento, la cantidad máxima de frames a capturar es 30; sin embargo, el usuario puede detener la captura de datos antes de este valor.
 
-**IMPORTANTE**: De lo anterior, se deduce que la cantidad de frames no será “30” (el valor máximo de cada seña, por ahora) para todos los samples necesariamente, sino variable, lo que conlleva a realizar padding a las secuencias por batch antes de entrenar el modelo.
+**IMPORTANTE**: De lo anterior, se deduce que la cantidad de frames no será “30” (el valor máximo de cada seña, por ahora) para todos los samples, sino variable, lo que conlleva a realizar padding a las secuencias por batch antes de entrenar el modelo.
 
 
 ====
