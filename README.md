@@ -9,4 +9,10 @@ Este proyecto se centra en la clasificación de señas dinámicas en tiempo real
   - Extracción de features: pose + hands landmarks. Si no se detecta uno de ellos, la grabación de la muestra continúa, rellenando con ceros los vectores, lo cual es importante, ya que no todas las señas involucran   movimiento de las manos.
   - Se guarda la muestra creada en el directorio correspondiente para facilitar la carga de datos al crear el custom dataset.
 
+====
+
+### ETAPA 2: CREACIÓN DEL CUSTOM DATASET
+### - CARGA DE DATOS PREVIO AL ENTRENAMIENTO (SIGUIENTE)
+
+
 # ARCHIVOS
