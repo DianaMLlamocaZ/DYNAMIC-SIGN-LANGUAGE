@@ -12,13 +12,18 @@ Este proyecto se centra en la clasificación de señas dinámicas en tiempo real
   - Se guarda la muestra creada en el directorio correspondiente para facilitar la carga de datos al diseñar el custom dataset.
 ---
 
-**NOTA**: Cuando el usuario, dentro de la recolección de los 30 frames, no realiza ninguna seña, el vector resultante de landmarks sería sparse (muchos ceros) por la función *extract_keypoints*, pero no necesariamente los 0s indican ausencia de dicha mano en la seña, sino que indican, por ejemplo, la ‘finalización’ del gesto antes de los 30 frames. Entonces, los landmarks recolectados, y el valor 0, no reflejan necesariamente una ‘ausencia’ de la mano para la seña, sino que puede deberse a que el gesto se realizó en menos de 30 frames.
+#### - **NOTA**:
+Cuando el usuario, en la etapa de captura de datos, realiza una seña más corta que la duración total (30 frames), los vectores resultantes de los landmarks pueden contener ceros al final por la función *extract_keypoints*. Estos ceros no necesariamente significan que la mano no estaba presente en la seña, sino que indican que el gesto ya había finalizado.
 
-Por ello, la solución fue que, dentro de los 30 segundos de recolección de datos, el usuario tiene la opción de finalizar la grabación (presionando la tecla ‘a’) cuando cree conveniente. Así, se almacena la cantidad necesaria de frames, en vez de que hayan ‘ceros’ que puedan confundir al modelo. Un punto a considerar es que, por el momento, la cantidad máxima de frames a capturar es 30; sin embargo, el usuario puede detener la captura de datos antes de este valor.
+Esto puede hacer que el modelo confunda 'ausencia de gesto' con 'fin anticipado del gesto', lo cual es un problema en el entrenamiento. Para solucionarlo:
+- Se permite que el usuario finalice manualmente la grabación con la tecla 'a'.
+- Se guarda la secuencia de datos tal como es, sin forzar a que tenga 30 frames.
+- Se evita rellenar con ceros que no contengan información real.
 
 ---
 
-**IMPORTANTE**: De lo anterior, se deduce que la cantidad de frames no será “30” (el valor máximo de cada seña, por ahora) para todos los samples, sino variable, lo que conlleva a realizar padding a las secuencias por batch antes de entrenar el modelo.
+#### - **IMPORTANTE**:
+De lo anterior, se deduce que la cantidad de frames no será “30” (el valor máximo de cada seña, por ahora) para todos los samples, sino variable, lo que conlleva a realizar padding a las secuencias por batch antes de entrenar el modelo.
 
 
 ====
