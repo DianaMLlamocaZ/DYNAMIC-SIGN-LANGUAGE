@@ -14,7 +14,7 @@ Importante: Es la continuación del proyecto "Static Sign Language", con el obje
   - Se guarda la muestra creada en el directorio correspondiente para facilitar la carga de datos al diseñar el custom dataset.
 ---
 
-#### - **NOTA**:
+#### - **NOTA (SOLUCIONADO)**:
 Cuando el usuario, en la etapa de captura de datos, realiza una seña más corta que la duración total (30 frames), los vectores resultantes de los landmarks pueden contener ceros al final por la función *extract_keypoints*. Estos ceros no necesariamente significan que la mano no estaba presente en la seña, sino que indican que el gesto ya había finalizado.
 
 Esto puede hacer que el modelo confunda 'ausencia de gesto' con 'fin anticipado del gesto', lo cual es un problema en el entrenamiento. Para solucionarlo:
