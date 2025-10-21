@@ -25,7 +25,8 @@ def main():
     capturing=False
     start_wait_time=None
     texto="Iniciando. Muestra tu mano..."
-    frames=30 #30 frames por muestra
+    detener_capturing=False
+    frames=30 #30 frames máximo por muestra
 
 
     clase=input("Ingrese la clase que quiere guardar/crear datos: ").lower().strip()
@@ -82,43 +83,54 @@ def main():
                         capturing=True
                         landmarks=[]
 
-
                     else:
                         texto=f"Iniciando en {int(elapsed)+1} seg. NO BAJES TU MANO."
                         
 
 
-            
             #Aquí, si capturing=True (lo cual es cierto SIEMPRE luego de que pasen los 3 segundos) capturo los frames
             if capturing:
+                
+                #Extraigo los keypoints del frame
                 landmark_frame=extract_keypoints(landmarks_tuple)
                 landmarks.append(landmark_frame)
 
-                #Si se capturan los > 'x' frames --> se termina la grabación
+
+                #Paths:
+                archivos_total_clase=len(os.listdir(path_clase))
+                name_archivo=f"{clase}_{archivos_total_clase}"
+                
+                    
+                #Ruta donde se va a guardar el archivo
+                ruta_final=os.path.join(path_clase,f"{name_archivo}.npy")
+
+
+                #Si se capturan los 'x' frames --> se termina la grabación
                 if len(landmarks)>=frames:
                     print("Finalizado!!")
-                    print(f"SHAPE DEL LANDMARK DE 'x' FRAMEEES: {np.array(landmarks).shape}")
-                    
-                    archivos_total_clase=len(os.listdir(path_clase))
-                    print(f"archivos total: {archivos_total_clase}")
-                    
-                    name_archivo=f"{clase}_{archivos_total_clase}"
-                    print(f"nombre archivo: {name_archivo}")
-                    
-
-                    #Ruta donde se va a guardar el archivo
-                    ruta_final=os.path.join(path_clase,f"{name_archivo}.npy")
                     
                     #Guardo el numpy array
                     np.save(ruta_final,np.array(landmarks))
-                    print(f"Muestra guardada!")
+                    print(f"Muestra guardada {name_archivo}. Shape: {np.array(landmarks).shape}")
+                    
+
                     break
+                
+                #Si el tiempo de la seña es menor al valor de la cantidad de frames máximo, el usuario, al presionar 'a', puede detener la grabación
+                else:
+                    detener_capturing=cv2.waitKey(1)
+
+                    if detener_capturing==ord("a"):
+                        np.save(ruta_final,np.array(landmarks))
+                        print(f"Muestra guardada {name_archivo}. Shape: {np.array(landmarks).shape}")
+                        break
 
              #=========#
 
 
             #Dibujo los landmarks
             draw_lms(frame,landmarks_tuple)
+            
             
             #Coloco el texto
             cv2.putText(frame, texto, (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
@@ -128,8 +140,8 @@ def main():
             cv2.imshow("Frame",frame)
 
 
-
-            tecla=cv2.waitKey(100)
+            #Presionar 'q' si se quiere salir antes de iniciar la captura de keypoints
+            tecla=cv2.waitKey(1)
             
             if tecla==ord("q"):
                 break
