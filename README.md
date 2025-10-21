@@ -19,3 +19,5 @@ Este proyecto se centra en la clasificación de señas dinámicas en tiempo real
 ----
 
 # ARCHIVOS
+- **create_data.py**: Archivo que se encarga de la creación y el almacenamiento de datos en tiempo real, utilizando las funciones definidas en *utils_keypoints.py*.
+- **utils_keypoints.py**: Archivo que contiene las funciones para dibujar los landmarks por frame y la extracción de keypoints.
