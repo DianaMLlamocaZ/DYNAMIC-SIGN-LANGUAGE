@@ -15,7 +15,8 @@ Este proyecto se centra en la clasificación de señas dinámicas en tiempo real
 
 ### ETAPA 2: CREACIÓN DEL CUSTOM DATASET
 #### - CARGA DE DATOS PREVIO AL ENTRENAMIENTO (SIGUIENTE PASO)
-
+  -
+  -
 ----
 
 # ARCHIVOS
