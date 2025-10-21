@@ -4,7 +4,7 @@ Este proyecto se centra en la clasificación de señas dinámicas en tiempo real
 ----
 
 # ETAPAS
-### ETAPA 1: CREACIÓN DEL PIPELINE AUTOMATIZADO PARA CAPTURA DE DATOS
+### ETAPA 1: CREACIÓN DEL PIPELINE AUTOMATIZADO PARA CAPTURA DE DATOS (HECHO)
 #### - CAPTURA Y ALMACENAMIENTO DE DATOS EN TIEMPO REAL (LISTO)
   - La grabación de las muestras se inicia 3 segundos después de que el usuario haya ingresado una de sus manos frente a la cámara.
   -  Posteriormente, el usuario procede a realizar la seña.
