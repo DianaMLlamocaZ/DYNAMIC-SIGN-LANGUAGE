@@ -34,7 +34,7 @@ def draw_lms(frame,tuple_lms):
 
 #Función para extraer los keypoints: "Flatten" para que el vector sea de 1d y las coordenadas 'x' e 'y' estén en un solo array
 def extract_keypoints(lms_tuple):
-    print("nuevooo")
+    
     #Landmarks left hand
     lms_left_hand=np.array([[res.x,res.y] for res in lms_tuple.left_hand_landmarks.landmark]).flatten() if lms_tuple.left_hand_landmarks else np.zeros(shape=21*2)
     
@@ -56,4 +56,5 @@ def extract_keypoints(lms_tuple):
     
 
     return landmarks_final #Retorno los landmarks
+
     
