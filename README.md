@@ -1,5 +1,5 @@
 # DESCRIPCIÓN
-Este proyecto se centra en la clasificación de señas dinámicas en tiempo real implementando modelos secuenciales y utilizando landmarks de MediaPipe Holistic.
+Este proyecto se centra en la clasificación de señas dinámicas en tiempo real implementando modelos secuenciales y utilizando los landmarks de MediaPipe Holistic como inputs para el modelo.
 
 ----
 
