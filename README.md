@@ -1,9 +1,11 @@
 # DESCRIPCIÓN
 Este proyecto se centra en la clasificación de señas dinámicas en tiempo real utilizando modelos secuenciales.
 
+----
+
 # ETAPAS
 ### ETAPA 1: CREACIÓN DEL PIPELINE AUTOMATIZADO PARA CAPTURA DE DATOS
-### - CAPTURA Y ALMACENAMIENTO DE DATOS EN TIEMPO REAL (LISTO)
+#### - CAPTURA Y ALMACENAMIENTO DE DATOS EN TIEMPO REAL (LISTO)
   - La grabación de las muestras se inicia 3 segundos después de que el usuario haya ingresado una de sus manos frente a la cámara.
   -  Posteriormente, el usuario procede a realizar la seña.
   - Extracción de features: pose + hands landmarks. Si no se detecta uno de ellos, la grabación de la muestra continúa, rellenando con ceros los vectores, lo cual es importante, ya que no todas las señas involucran   movimiento de las manos.
@@ -12,7 +14,8 @@ Este proyecto se centra en la clasificación de señas dinámicas en tiempo real
 ====
 
 ### ETAPA 2: CREACIÓN DEL CUSTOM DATASET
-### - CARGA DE DATOS PREVIO AL ENTRENAMIENTO (SIGUIENTE)
+#### - CARGA DE DATOS PREVIO AL ENTRENAMIENTO (SIGUIENTE PASO)
 
+----
 
 # ARCHIVOS
