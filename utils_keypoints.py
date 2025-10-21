@@ -44,7 +44,7 @@ def extract_keypoints(lms_tuple):
 
 
     #Landmarks pose
-    #lms_pose=np.array([[res.x,res.y,res.z,res.visibility] for res in lms_tuple.pose_landmarks.landmark]).flatten() if lms_tuple.pose_landmarks else np.zeros(shape=33*4)
+    lms_pose=np.array([[res.x,res.y,res.z,res.visibility] for res in lms_tuple.pose_landmarks.landmark]).flatten() if lms_tuple.pose_landmarks else np.zeros(shape=33*4)
 
 
     #Landmarks face
@@ -52,9 +52,10 @@ def extract_keypoints(lms_tuple):
     
 
     #Concateno, ya que el rellenar con 'ceros' igual me asegura de que se tendrán los vectores, así no se hayan mostrado en la cámara directamente
-    landmarks_final=np.concatenate([lms_left_hand,lms_right_hand]) #,lms_pose])
+    landmarks_final=np.concatenate([lms_left_hand,lms_right_hand,lms_pose])
     
 
     return landmarks_final #Retorno los landmarks
 
     
+
