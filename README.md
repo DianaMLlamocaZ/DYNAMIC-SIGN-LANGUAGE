@@ -27,6 +27,7 @@ Esto puede hacer que el modelo confunda 'ausencia de gesto' con 'fin anticipado 
 #### - **IMPORTANTE**:
 De lo anterior, se deduce que la cantidad de frames no será “30” (el valor máximo de cada seña, por ahora) para todos los samples, sino variable, lo que conlleva a realizar padding a las secuencias por batch antes de entrenar el modelo.
 
+---
 
 ====
 
