@@ -37,7 +37,11 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 ----
 
 #### - **NOTA**:
-E
+- El preprocesamiento de los datos está en proceso, y debe aplicarse antes de la creación del custom dataset. Sin embargo, decidí implementar primero el custom dataset ya que estoy evaluando, en *tiempo real*, el performance del modelo, en cuanto a predicción 'continua' y 'fluidez'. Además, estoy identificando qué mejoras realizar respecto a la invarianza a escala y detección de movimientos para evitar que el modelo prediga clases incorrectas cuando una seña está en transición.
+
+----
+
+
 
 # ARCHIVOS
 - **create_data.py**: Archivo que se encarga de la creación y el almacenamiento de datos en tiempo real, utilizando las funciones definidas en *utils_keypoints.py*.
