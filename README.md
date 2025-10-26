@@ -32,8 +32,8 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 
 ### ETAPA 2: CREACIÓN DEL CUSTOM DATASET (SIGUIENTE PASO)
 #### - CARGA DE DATOS PREVIO AL ENTRENAMIENTO (SIGUIENTE PASO)
-  -
-  -
+  - Se crea el custom dataset leyendo cada directorio individualmente, y agrupándolos en listas que luego se convertirán a tensores para el entrenamiento del modelo.
+  - Adicionalmente, se creó una función de padding. De esta manera, se asegura que todos los samples tengan el mismo sequence length.
 ----
 
 # ARCHIVOS
