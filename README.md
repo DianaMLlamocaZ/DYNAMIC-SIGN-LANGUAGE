@@ -50,5 +50,5 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 - **utils_keypoints.py**: Archivo que contiene las funciones para dibujar los landmarks por frame y la extracción de keypoints por muestra.
 - **custom_dataset.py**: Archivo que contiene el código para la creación del custom dataset, leyendo cada directorio individualmente y almacenándolos en listas que se convertirán a tensores para el entrenamiento del modelo.
 - **utils_dataloader.py**: Archivo que contiene una función de "padding dinámico", para que, en cada batch, se calcule el max length y se rellenen de 0s algunos samples que no necesariamente contengan más de 30 frames.
-- **real_time_pre.py**: Archivo que contiene el código *'referencial'* para la predicción en tiempo real, *creado principalmente para saber qué mejoras realizar*.
+- **real_time_pre.py (en actualización)**: Archivo que contiene el código *'referencial'* para la predicción en tiempo real, *creado principalmente para saber qué mejoras realizar*.
   Por ese motivo, actualizaré este código constantemente, ya que quedan muchas mejoras por hacer respecto al suavizado temporal, y evitar que el modelo prediga clases durante la transición de una seña. Por lo tanto, *este código iré modificándolo y actualizándolo* con el objetivo de mejorar la predicción de señas dinámicas en tiempo real.
