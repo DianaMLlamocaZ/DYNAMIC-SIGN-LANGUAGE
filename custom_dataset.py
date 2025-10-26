@@ -16,9 +16,7 @@ class DatasetDL(torch.utils.data.Dataset):
         for clase in os.listdir(path_dataset):
             path_clase=f"./dataset/{clase}"
             for sample_clase in os.listdir(path_clase):
-                #print(f"sample clase: {sample_clase}")
                 sample=np.load(f"{path_clase}/{sample_clase}")
-                #print("sample:",sample,sample.shape)
                 self.kps_sample.append(sample)
                 self.target.append(self.clases[clase])
         
@@ -31,4 +29,5 @@ class DatasetDL(torch.utils.data.Dataset):
         sample=torch.tensor(self.kps_sample[index])
         tgt=torch.tensor(self.target[index])
         #print(f"targeeet: {tgt},{tgt.shape}")
+
         return sample,tgt
