@@ -5,7 +5,7 @@ from collections import deque
 import torch
 import os
 
-from utils_keypoints import extract_keypoints
+from utils_keypoints import extract_keypoints,draw_lms
 from model import Modelo
 
 #Aquí se almacenan los 30 frames para predicción
@@ -24,7 +24,7 @@ draw=mp.solutions.drawing_utils
 weights_model=torch.load("./modelo.pth",weights_only=True)
 
 #Instancio al modelo
-modelo=Modelo(input_size=126,hidden_state_size=32,output_size=2)
+modelo=Modelo(input_size=126,hidden_state_size=32,output_size=5)
 
 #Cargo los pesos AL modelo
 modelo.load_state_dict(weights_model)
@@ -35,10 +35,12 @@ clases={clase_num:clase_str for clase_num,clase_str in enumerate(os.listdir(path
 
 
 
-with md_holistic.Holistic(model_complexity=1,min_detection_confidence=0.5,min_tracking_confidence=0.5) as holistic_model:
+with md_holistic.Holistic(model_complexity=1,min_detection_confidence=0.5,min_tracking_confidence=0.4) as holistic_model:
         print("Presiona 'q' para salir")
 
         cam=cv2.VideoCapture(0)
+
+        text_pred=""
 
         while True:
 
@@ -51,37 +53,47 @@ with md_holistic.Holistic(model_complexity=1,min_detection_confidence=0.5,min_tr
             landmarks_tuple=holistic_model.process(frame[:,:,::-1])
 
 
+            #Dibujo los landmarks
+            draw_lms(frame,landmarks_tuple)
+
+            
             #Obtengo los keypoints (aquí ya no hay manejo de 'keypoints' en frame, ya que la función lo realiza)
             landmarks_extracted=extract_keypoints(landmarks_tuple)
+                  
+
+            #Aquí verifico que la suma de los vectores NO sean ceros (left and right hand) para realizar la predicción
+            if np.sum(landmarks_extracted)!=0:
+                  
+                  #Añado los landmarks extracted al deque
+                  sequences.append(landmarks_extracted)
 
 
-            #Añado los landmarks extracted al deque
-            sequences.append(landmarks_extracted)
+                  #El modelo fue entrenado con '30 frames', entonces aquí aplico dicha lógica y le paso al modelo cuando len == 30
+                  if len(sequences)==30:
+                        with torch.no_grad():
+                              modelo.eval()
+
+                              #Predicción del modelo
+                              seq_a_predecir=torch.tensor(np.array(sequences),dtype=torch.float32).unsqueeze(0) #shape 'sequences': [30,126] --> .unsqueeze(0) batch dimension, pues modelo es batch_first=True 
+                                    
+                              #Le paso al modelo la secuencia
+                              logits_pred=modelo(seq_a_predecir)
+                                    
+                              #print(f"logits pred: {logits_pred}, shapee: {logits_pred.shape}")
+                              #Conversión de logits a probabilidades
+                              probs_pred=sm(logits_pred)
 
 
-            #El modelo fue entrenado con '30 frames', entonces aquí aplico dicha lógica y le paso al modelo cuando len == 30
-            if len(sequences)==30:
-                  with torch.no_grad():
-                        modelo.eval()
+                              #Obtengo la clase 'predicha' por el modelo
+                              clase_pred=torch.argmax(probs_pred,dim=1).item()
 
-                        #Predicción del modelo
-                        seq_a_predecir=torch.tensor(np.array(sequences),dtype=torch.float32).unsqueeze(0) #shape 'sequences': [30,126] --> .unsqueeze(0) batch dimension, pues modelo es batch_first=True 
-                        
-                        #Le paso al modelo la secuencia
-                        logits_pred=modelo(seq_a_predecir)
-                        
-                        #print(f"logits pred: {logits_pred}, shapee: {logits_pred.shape}")
-                        #Conversión de logits a probabilidades
-                        probs_pred=sm(logits_pred)
+                              #Actualizo el texto de la predicción
+                              text_pred=clases[clase_pred]
+                                    
+                             
 
-
-                        #Obtengo la clase 'predicha' por el modelo
-                        clase_pred=torch.argmax(probs_pred,dim=1).item()
-                        print(f"clase predicha: {clase_pred}")
-                        
-                        #Coloco la predicción en pantalla
-                        cv2.putText(frame,f"Pred: {clases[clase_pred]}",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2,cv2.LINE_AA)
-
+            #Muestro el texto para que, aunque no hayan predicciones, NO se quite rápido la predicción
+            cv2.putText(frame,f"Pred: {text_pred}",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2,cv2.LINE_AA)
 
             #Muestro la cámara
             cv2.imshow("real time pred",frame)
