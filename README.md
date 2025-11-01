@@ -33,6 +33,10 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 ### ETAPA 2: PREPROCESAMIENTO DE DATOS
 
 
+
+
+====
+
 ### ETAPA 3: CREACIÓN DEL CUSTOM DATASET (EN PROCESO)
 #### - CARGA DE DATOS PREVIO AL ENTRENAMIENTO (EN PROCESO)
   - Se crea el custom dataset leyendo cada directorio individualmente, y agrupándolos en listas que luego se convertirán a tensores para el entrenamiento del modelo.
