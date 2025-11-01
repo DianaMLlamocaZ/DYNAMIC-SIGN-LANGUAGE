@@ -62,7 +62,7 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 # ARCHIVOS
 - **create_data.py**: Archivo que se encarga de la creación y el almacenamiento de datos en tiempo real, utilizando las funciones definidas en *utils_keypoints.py*.
 - **utils_keypoints.py**: Archivo que contiene las funciones para dibujar los landmarks por frame, la extracción de keypoints por muestra y el preprocesamiento de los mismos para garantizar la invarianza a 'traslación'.
-- **custom_dataset.py**: Archivo que contiene el código para la creación del custom dataset, leyendo cada directorio individualmente y almacenándolos en listas que se convertirán a tensores para el entrenamiento del modelo.
+- **custom_dataset.py**: Archivo que contiene el código para la creación del custom dataset, leyendo cada directorio individualmente y almacenándolos en listas que se convertirán a tensores para el entrenamiento del modelo, así como el preprocesamiento de los landmarks.
 - **utils_dataloader.py**: Archivo que contiene una función de "padding dinámico", para que, en cada batch, se calcule el max length y se rellenen de 0s algunos samples que no necesariamente contengan más de 30 frames.
 
 - **training.py**: Archivo que contiene el código para el entrenamiento del modelo.
