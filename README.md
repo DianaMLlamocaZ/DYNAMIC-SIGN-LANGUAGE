@@ -36,7 +36,7 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 
 ---
 #### - **NOTA:**
-  - Esto permite que el usuario tenga mayor flexibilidad de realizar la seña en cualquier posición del frame. Sin embargo, la invarianza a 'traslación' NO es lo mismo que la invarianza a 'escala' y 'rotación', por lo que si se realiza la misma seña, pero con mayor proximidad/lejanía a la cámara o con grados distintos de 0 respecto al wrist, el modelo verá una distribución diferente.
+  - Esto permite que el usuario tenga mayor flexibilidad de realizar la seña en cualquier posición del frame. Sin embargo, la invarianza a 'traslación' NO es lo mismo que la invarianza a 'escala' y 'rotación', por lo que si se realiza la misma seña, pero con mayor proximidad/lejanía a la cámara o con grados distintos a los que se entrenó respecto al wrist, el modelo verá una distribución diferente.
 ---
 
 #### - **IMPORTANTE** (EN PROCESO):
