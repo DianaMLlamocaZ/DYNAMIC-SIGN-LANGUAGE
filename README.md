@@ -36,9 +36,11 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 
 ---
 #### - **NOTA:**
-  - Esto permite que el usuario tenga mayor flexibilidad de realizar la seña en cualquier posición en el frame. Sin embargo, la invarianza a 'traslación' NO es lo mismo que la invarianza a 'rotación', por lo que si se realiza la misma seña, pero con grados distintos de 0 respecto a las coordenadas relativas, el modelo verá una distribución distinta.
+  - Esto permite que el usuario tenga mayor flexibilidad de realizar la seña en cualquier posición del frame. Sin embargo, la invarianza a 'traslación' NO es lo mismo que la invarianza a 'escala' y 'rotación', por lo que si se realiza la misma seña, pero con mayor proximidad/lejanía a la cámara o con grados distintos de 0 respecto al wrist, el modelo verá una distribución diferente.
 ---
 
+### - **IMPORTANTE**:
+  - Para solucionar lo anterior, estoy evaluando aplicar invarianza a escala de las coordenadas 'x' e 'y', no 'z', ya que, en algunas señas, es necesario que el modelo interprete correctamente el movimiento de los gestos en el eje 'z'.
 
 ====
 
