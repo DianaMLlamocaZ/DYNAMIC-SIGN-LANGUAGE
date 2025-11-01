@@ -32,15 +32,15 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 ====
 ### ETAPA 2: PREPROCESAMIENTO DE DATOS (HECHO)
 #### - NORMALIZACIÓN DE KEYPOINTS PARA LA INVARIANZA A 'TRASLACIÓN' (LISTO)
-  - Para que el modelo generalice mejor las señas dinámicas, y no dependa exclusivamente de la 'posición' de los landmarks en el frame, se implementó la invarianza a traslación para que, independientemente de dónde se encuentren ubicados los keypoints de los landmarks, el modelo aprenda la "distribución espacial" respecto al wrist (coordenada [0,0,0]).
+  - Para que el modelo generalice mejor las señas dinámicas, y no dependa exclusivamente de la 'posición' de los landmarks en el frame, se implementó la invariancia a traslación para que, independientemente de dónde se encuentren ubicados los keypoints de los landmarks, el modelo aprenda la "distribución espacial" respecto al wrist (coordenada [0,0,0]).
 
 ---
 #### - **NOTA:**
-  - Esto permite que el usuario tenga mayor flexibilidad de realizar la seña en cualquier posición del frame. Sin embargo, la invarianza a 'traslación' NO es lo mismo que la invarianza a 'escala' y 'rotación', por lo que si se realiza la misma seña, pero con mayor proximidad/lejanía a la cámara o con grados distintos a los que se entrenó respecto al wrist, el modelo verá una distribución diferente.
+  - Esto permite que el usuario tenga mayor flexibilidad de realizar la seña en cualquier posición del frame. Sin embargo, la invarianza a 'traslación' NO es lo mismo que la invariancia a 'escala' y 'rotación', por lo que si se realiza la misma seña, pero con mayor proximidad/lejanía a la cámara o con grados distintos a los que se entrenó respecto al wrist, el modelo verá una distribución diferente.
 ---
 
 #### - **IMPORTANTE** (EN PROCESO):
-  - Para solucionar lo anterior, estoy evaluando aplicar invarianza a escala de las coordenadas 'x' e 'y', no 'z', ya que, en algunas señas, es necesario que el modelo interprete correctamente el movimiento de los gestos en el eje 'z'.
+  - Para solucionar lo anterior, estoy evaluando aplicar invariancia a escala de las coordenadas 'x' e 'y', no 'z', ya que, en algunas señas, es necesario que el modelo interprete correctamente el movimiento de los gestos en el eje 'z'.
 ---
 
 ====
@@ -53,7 +53,7 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 ----
 
 #### - **NOTA (EN PROCESO)**:
-- El preprocesamiento de los datos garantiza la invarianza a traslación, pero no la invarianza a escala ni rotación. Por ello, actualmente me encuentro evaluando qué método es el que permite un mejor performance y generalización del modelo en las señas para aplicar el preprocesamiento que mejor se ajuste a los gestos.
+- El preprocesamiento de los datos garantiza la invariancia a traslación, pero no la invariancia a escala ni rotación. Por ello, actualmente me encuentro evaluando qué método es el que permite un mejor performance y generalización del modelo en las señas para aplicar el preprocesamiento que mejor se ajuste a los gestos.
 
 ----
 
@@ -61,7 +61,7 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 
 # ARCHIVOS
 - **create_data.py**: Archivo que se encarga de la creación y el almacenamiento de datos en tiempo real, utilizando las funciones definidas en *utils_keypoints.py*.
-- **utils_keypoints.py**: Archivo que contiene las funciones para dibujar los landmarks por frame, la extracción de keypoints por muestra y el preprocesamiento de los mismos para garantizar la invarianza a 'traslación'.
+- **utils_keypoints.py**: Archivo que contiene las funciones para dibujar los landmarks por frame, la extracción de keypoints por muestra y el preprocesamiento de los mismos para garantizar la invariancia a 'traslación'.
 - **custom_dataset.py**: Archivo que contiene el código para la creación del custom dataset, leyendo cada directorio individualmente y almacenándolos en listas que se convertirán a tensores para el entrenamiento del modelo, así como el preprocesamiento de los landmarks.
 - **utils_dataloader.py**: Archivo que contiene una función de "padding dinámico", para que, en cada batch, se calcule el max length y se rellenen de 0s algunos samples que no necesariamente contengan más de 30 frames.
 
