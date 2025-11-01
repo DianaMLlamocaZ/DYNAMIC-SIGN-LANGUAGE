@@ -31,7 +31,7 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 
 ====
 ### ETAPA 2: PREPROCESAMIENTO DE DATOS (HECHO)
-#### - NORMALIZACIÓN DE KEYPOINTS PARA LA INVARIANZA A 'TRASLACIÓN'
+#### - NORMALIZACIÓN DE KEYPOINTS PARA LA INVARIANZA A 'TRASLACIÓN' (LISTO)
   - Para que el modelo generalice mejor las señas dinámicas, y no dependa exclusivamente de la 'posición' de los landmarks en el frame, se implementó la invarianza a traslación para que, independientemente de dónde se encuentren ubicados los keypoints de los landmarks, el modelo aprenda la "distribución espacial" respecto al wrist (coordenada [0,0,0]).
 
 ---
