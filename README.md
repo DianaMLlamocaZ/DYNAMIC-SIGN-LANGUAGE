@@ -53,7 +53,7 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 ----
 
 #### - **NOTA (EN PROCESO)**:
-- El preprocesamiento de los datos garantizar la invarianza a traslación, pero no la invarianza a escala ni rotación. Por ello, actualmente me encuentro evaluando qué método es la que permite mejor performance y generalización del modelo en las señas.
+- El preprocesamiento de los datos garantiza la invarianza a traslación, pero no la invarianza a escala ni rotación. Por ello, actualmente me encuentro evaluando qué método es el que permite un mejor performance y generalización del modelo en las señas para aplicar el preprocesamiento que mejor se ajuste a los gestos.
 
 ----
 
