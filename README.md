@@ -30,7 +30,7 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
 ---
 
 ====
-### ETAPA 2: PREPROCESAMIENTO DE DATOS
+### ETAPA 2: PREPROCESAMIENTO DE DATOS (HECHO)
 #### - Normalización de keypoints para la invarianza a 'traslación'
   - Para que el modelo generalice mejor las señas dinámicas, y no dependa exclusivamente de la 'posición' de los landmarks en el frame, se implementó la invarianza a traslación para que, independientemente de dónde se encuentren ubicados los keypoints de los landmarks, el modelo aprenda la "distribución espacial" respecto al wrist (coordenada [0,0,0]).
 
@@ -39,20 +39,21 @@ De lo anterior, se deduce que la cantidad de frames no será “30” (el valor 
   - Esto permite que el usuario tenga mayor flexibilidad de realizar la seña en cualquier posición del frame. Sin embargo, la invarianza a 'traslación' NO es lo mismo que la invarianza a 'escala' y 'rotación', por lo que si se realiza la misma seña, pero con mayor proximidad/lejanía a la cámara o con grados distintos de 0 respecto al wrist, el modelo verá una distribución diferente.
 ---
 
-### - **IMPORTANTE**:
+#### - **IMPORTANTE** (EN PROCESO):
   - Para solucionar lo anterior, estoy evaluando aplicar invarianza a escala de las coordenadas 'x' e 'y', no 'z', ya que, en algunas señas, es necesario que el modelo interprete correctamente el movimiento de los gestos en el eje 'z'.
+---
 
 ====
 
-### ETAPA 3: CREACIÓN DEL CUSTOM DATASET (EN PROCESO)
-#### - CARGA DE DATOS PREVIO AL ENTRENAMIENTO (EN PROCESO)
+### ETAPA 3: CREACIÓN DEL CUSTOM DATASET (HECHO)
+#### - CARGA DE DATOS PREVIO AL ENTRENAMIENTO (HECHO)
   - Se crea el custom dataset leyendo cada directorio individualmente, y agrupándolos en listas que luego se convertirán a tensores para el entrenamiento del modelo.
   - Adicionalmente, se creó una función de padding. De esta manera, se asegura que todos los samples tengan el mismo sequence length.
+  - Además, aplico el preprocesamiento de datos durante la creación del custom dataset para garantizar la invarianza a traslación de los keypoints.
 ----
 
 #### - **NOTA (EN PROCESO)**:
-- El preprocesamiento de los datos está en proceso, y debe aplicarse antes de la creación del custom dataset.
-  Sin embargo, decidí implementar primero el custom dataset ya que estoy evaluando, en *tiempo real*, el performance del modelo, en cuanto a predicción 'continua' y 'fluidez'. Además, estoy identificando qué mejoras realizar respecto a la invarianza a escala y detección de movimientos para evitar que el modelo prediga clases incorrectas cuando una seña está en transición.
+- El preprocesamiento de los datos garantizar la invarianza a traslación, pero no la invarianza a escala ni rotación. Por ello, actualmente me encuentro evaluando qué método es la que permite mejor performance y generalización del modelo en las señas.
 
 ----
 
