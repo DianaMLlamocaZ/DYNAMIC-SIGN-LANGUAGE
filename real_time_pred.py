@@ -5,7 +5,7 @@ from collections import deque
 import torch
 import os
 
-from utils_keypoints import extract_keypoints,draw_lms
+from utils_keypoints import extract_keypoints,draw_lms,coord_rel
 from model import Modelo
 
 #Aquí se almacenan los 30 frames para predicción
@@ -34,7 +34,6 @@ path_dataset="./dataset"
 clases={clase_num:clase_str for clase_num,clase_str in enumerate(os.listdir(path_dataset))}
 
 
-
 with md_holistic.Holistic(model_complexity=1,min_detection_confidence=0.5,min_tracking_confidence=0.4) as holistic_model:
         print("Presiona 'q' para salir")
 
@@ -56,6 +55,7 @@ with md_holistic.Holistic(model_complexity=1,min_detection_confidence=0.5,min_tr
             #Dibujo los landmarks
             draw_lms(frame,landmarks_tuple)
 
+
             
             #Obtengo los keypoints (aquí ya no hay manejo de 'keypoints' en frame, ya que la función lo realiza)
             landmarks_extracted=extract_keypoints(landmarks_tuple)
@@ -63,7 +63,9 @@ with md_holistic.Holistic(model_complexity=1,min_detection_confidence=0.5,min_tr
 
             #Aquí verifico que la suma de los vectores NO sean ceros (left and right hand) para realizar la predicción
             if np.sum(landmarks_extracted)!=0:
-                  
+                  #print(f"landmarks extracted suuum: {np.sum(landmarks_extracted)}")
+
+
                   #Añado los landmarks extracted al deque
                   sequences.append(landmarks_extracted)
 
@@ -74,12 +76,14 @@ with md_holistic.Holistic(model_complexity=1,min_detection_confidence=0.5,min_tr
                               modelo.eval()
 
                               #Predicción del modelo
-                              seq_a_predecir=torch.tensor(np.array(sequences),dtype=torch.float32).unsqueeze(0) #shape 'sequences': [30,126] --> .unsqueeze(0) batch dimension, pues modelo es batch_first=True 
-                                    
+                              seq_a_predecir_no_rel=torch.tensor(np.array(sequences),dtype=torch.float32) #shape 'sequences': [30,126]
+                              
+                              seq_a_predecir_si_rel=coord_rel(seq_a_predecir_no_rel).unsqueeze(0) #--> .unsqueeze(0) batch dimension, pues el modelo es batch_first=True 
+
                               #Le paso al modelo la secuencia
-                              logits_pred=modelo(seq_a_predecir)
+                              logits_pred=modelo(seq_a_predecir_si_rel)
                                     
-                              #print(f"logits pred: {logits_pred}, shapee: {logits_pred.shape}")
+                
                               #Conversión de logits a probabilidades
                               probs_pred=sm(logits_pred)
 
@@ -87,12 +91,10 @@ with md_holistic.Holistic(model_complexity=1,min_detection_confidence=0.5,min_tr
                               #Obtengo la clase 'predicha' por el modelo
                               clase_pred=torch.argmax(probs_pred,dim=1).item()
 
-                              #Actualizo el texto de la predicción
                               text_pred=clases[clase_pred]
                                     
-                             
 
-            #Muestro el texto para que, aunque no hayan predicciones, NO se quite rápido la predicción
+            #Muestro el texto, para que así, aunque no hayan predicciones, NO se quite rápido la predicción
             cv2.putText(frame,f"Pred: {text_pred}",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2,cv2.LINE_AA)
 
             #Muestro la cámara
