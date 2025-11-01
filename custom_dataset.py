@@ -3,10 +3,10 @@ import torch
 import os
 import numpy as np
 
+from utils_keypoints import coord_rel
 
 class DatasetDL(torch.utils.data.Dataset):
     def __init__(self,path_dataset):
-        #print(os.listdir(path_dataset))
         
         self.kps_sample=[]
         self.target=[]
@@ -17,6 +17,7 @@ class DatasetDL(torch.utils.data.Dataset):
             path_clase=f"./dataset/{clase}"
             for sample_clase in os.listdir(path_clase):
                 sample=np.load(f"{path_clase}/{sample_clase}")
+                
                 self.kps_sample.append(sample)
                 self.target.append(self.clases[clase])
         
@@ -26,8 +27,10 @@ class DatasetDL(torch.utils.data.Dataset):
 
 
     def __getitem__(self,index):
-        sample=torch.tensor(self.kps_sample[index])
-        tgt=torch.tensor(self.target[index])
-        #print(f"targeeet: {tgt},{tgt.shape}")
+        sample=torch.tensor(self.kps_sample[index]) #shape: [30,126]
+        sample_rel=coord_rel(sample) #shape: [30,126]
 
-        return sample,tgt
+        tgt=torch.tensor(self.target[index])
+        
+        return sample_rel,tgt #sample_rel
+    
