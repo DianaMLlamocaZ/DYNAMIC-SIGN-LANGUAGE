@@ -32,5 +32,6 @@ class DatasetDL(torch.utils.data.Dataset):
 
         tgt=torch.tensor(self.target[index])
         
-        return sample_rel,tgt #sample_rel
+        return sample_rel,tgt
     
+
